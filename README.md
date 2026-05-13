@@ -1,101 +1,41 @@
-# 🐾 Virtuaalne lemmikloom
+Virtuaalne lemmikloom
 
-Tamagotchi-stiilis mäng. Hoolitse oma virtuaalse koera, jänese või draakoni eest!
+See on tamagotchi-stiilis mäng, kus kasutaja hoolitseb oma virtuaalse koera, jänese või draakoni eest. Mängu eesmärk on hoida lemmik elus ja õnnelik nii kaua kui võimalik, jälgides tema tervist, nälga, puhtust ja meeleolu ning valides erinevaid tegevusi.
 
-## 📁 Failid ja klassid
+Failid ja klassid
 
-| Fail                                            | Roll                                                |
-| ----------------------------------------------- | --------------------------------------------------- |
-| **Peaklass.java**                               | JavaFX põhiklass, kogu GUI (peaminemeetod `main()`) |
-| **Lemmikloom.java**                             | Abstraktne klass, implementeerib `Serializable`     |
-| **Koer.java**, **Jänes.java**, **Draakon.java** | Alamklassid (pärimine + polümorfism)                |
-| **Mänguhaldur.java**                            | Mängu loogika (statistika, juhuslikud sündmused)    |
-| **FailiHaldur.java**                            | Mängu salvestamine ja laadimine binaarsest failist  |
-| **SisendErind.java**                            | Oma erindiklass valede sisendite jaoks              |
+Programm koosneb kaheksast klassist. Peaklass.java on JavaFX põhiklass, mis sisaldab kogu graafilist kasutajaliidest ja meetodit main(), kust programm käivitatakse. Lemmikloom.java on abstraktne põhiklass, mis implementeerib Serializable liidese. Koer.java, Jänes.java ja Draakon.java on Lemmikloom klassi alamklassid. Mänguhaldur.java vastutab mängu loogika eest, sealhulgas statistika hoidmise ja juhuslike sündmuste eest. FailiHaldur.java tegeleb mängu salvestamise ja laadimisega binaarsest failist. SisendErind.java on oma erindiklass valede sisendite jaoks.
 
-## 🚀 Käivitamine (IntelliJ IDEA)
+Käivitamine IntelliJ IDEA-s
 
-### 1. Lae JavaFX alla
+Esiteks tuleb JavaFX SDK alla laadida lehelt https://gluonhq.com/products/javafx/. Vali Windows x64 SDK ja paki see lahti.
 
-https://gluonhq.com/products/javafx/ → vali Windows x64 SDK → paki lahti.
+Seejärel ava IntelliJ IDEA-s projekt: File, Open ning vali kaust, kus asuvad .java failid.
 
-### 2. Ava projekt IntelliJ-s
+JavaFX raamatukogu lisamiseks mine File, Project Structure, Libraries ja klõpsa plussmärgile ning vali Java. Liigu JavaFX kausta lib alamkausta ja vali see. Tasub tähele panna, et õige lib kaust asub JavaFX-i sisemises kaustas, mitte juurkaustas. Vale tee oleks näiteks openjfx-26.0.1_windows-x64_bin-sdk\lib, õige tee aga openjfx-26.0.1_windows-x64_bin-sdk\javafx-sdk-26.0.1\lib. Lõpuks vajuta Apply ja OK.
 
-`File` → `Open` → vali kaust, kus on `.java` failid.
+Järgmiseks tuleb lisada VM options. Mine Run, Edit Configurations. Kui konfiguratsiooni veel ei ole, klõpsa plussmärgile, vali Application ja määra Main class väärtuseks Peaklass. Leia väli VM options (kui seda ei ole näha, klõpsa Modify options ja vali Add VM options) ning kleebi sinna järgmine tekst, asendades tee oma JavaFX SDK asukohaga:
 
-### 3. Lisa JavaFX raamatukogu
-
-- `File` → `Project Structure` → `Libraries` → klõpsa **`+`** → `Java`
-- Liigu JavaFX kausta **`lib`** alamkausta ja vali see
-- ⚠️ Õige `lib` kaust on **JavaFX-i sisemises kaustas**, mitte juurkaustas!
-  - ❌ Vale: `openjfx-26.0.1_windows-x64_bin-sdk\lib`
-  - ✅ Õige: `openjfx-26.0.1_windows-x64_bin-sdk\javafx-sdk-26.0.1\lib`
-- `Apply` → `OK`
-
-### 4. Lisa VM options
-
-- `Run` → `Edit Configurations`
-- Kui konfiguratsiooni pole: klõpsa **`+`** → `Application` → `Main class:` vali `Peaklass`
-- Leia väli **VM options** (kui ei näe, klõpsa `Modify options` → `Add VM options`)
-- Kleebi sinna (asenda oma JavaFX teega):
-
-```
 --module-path "TEE/SINU/JAVAFX/lib" --add-modules javafx.controls
-```
 
-**Näide:**
+Näiteks võib see välja näha nii:
 
-```
 --module-path "C:\Users\loore-lotta\OneDrive - Tartu Ülikool\Töölaud\kool\OOP\rühmatöö\openjfx-26.0.1_windows-x64_bin-sdk\javafx-sdk-26.0.1\lib" --add-modules javafx.controls
-```
 
-- `Apply` → `OK`
+Pärast Apply ja OK vajutamist saab programmi käivitada rohelise käivitusnupu abil.
 
-### 5. Käivita
+Kiirklahvid mängus
 
-Klõpsa rohelist ▶️ nuppu.
+Mängus saab tegevusi valida ka klaviatuuri abil. R käivitab ravi, T toitmise, P pesemise, M mängimise ja S salvestamise. Uue mängu aknas kinnitab sisendid Enter ja Escape viib tagasi peamenüüsse.
 
-## ⌨️ Kiirklahvid
+Mängu salvestus
 
-| Klahv  | Tegevus                 |
-| ------ | ----------------------- |
-| R      | Ravi                    |
-| T      | Toida                   |
-| P      | Pese                    |
-| M      | Mängi                   |
-| S      | Salvesta                |
-| Enter  | Kinnita uue mängu aknas |
-| Escape | Tagasi uue mängu aknast |
+Salvestus läheb projekti kausta faili nimega lemmikloom_salvestus.dat. Tegemist on binaarse failiga, mis luuakse Serializable liidese abil. Kui lemmik sureb, kustutatakse salvestus automaatselt, et surnud loomaga ei saaks mängu jätkata.
 
-## 💾 Mängu salvestus
+Levinud vead
 
-Salvestus läheb faili **`lemmikloom_salvestus.dat`** projekti kausta.
-Kui lemmik sureb, salvestus kustutatakse automaatselt.
+Kui programm käivitamisel kuvab veateadet "Module javafx.controls not found", on VM options module-path tõenäoliselt vale. Kontrolli, et tee lõpeks osaga \javafx-sdk-XX.X.X\lib, mitte ainult \lib.
 
-## 🚨 Levinud vead
+Kui kuvatakse "JavaFX runtime components are missing", siis VM options on lisamata ja tuleb tagasi minna seadistuse juurde.
 
-**"Module javafx.controls not found"**
-→ VM options module-path on vale. Kontrolli, et tee lõpeks `\javafx-sdk-XX.X.X\lib` (mitte lihtsalt `\lib`).
-
-**"JavaFX runtime components are missing"**
-→ Unustasid VM options lisada. Mine tagasi sammu 4 juurde.
-
-**Eesti tähed ei tööta korralikult**
-→ `Run` → `Edit Configurations` → VM options lõppu lisa: `-Dfile.encoding=UTF-8`
-
-## ⌨️ Kiirklahvid mängus
-
-| Klahv  | Tegevus                 |
-| ------ | ----------------------- |
-| R      | Ravi                    |
-| T      | Toida                   |
-| P      | Pese                    |
-| M      | Mängi                   |
-| S      | Salvesta                |
-| Enter  | Kinnita uue mängu aknas |
-| Escape | Tagasi uue mängu aknast |
-
-## 💾 Mängu salvestus
-
-Salvestus läheb faili **`lemmikloom_salvestus.dat`** (binaarne, Serializable).
-Kui lemmik sureb, salvestus kustutatakse automaatselt.
+Kui eesti tähed ei tööta korralikult, lisa VM options lõppu -Dfile.encoding=UTF-8.
